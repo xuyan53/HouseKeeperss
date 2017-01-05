@@ -1,5 +1,9 @@
 package edu.feicui.app.phone.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +20,7 @@ import android.widget.ImageView;
 import edu.feicui.app.phone.R;
 
 public class LeaderActivity extends AppCompatActivity {
-    ImageView mImgScale,mImgAlpha,mImgRotate,mImgTranslate;
+    ImageView mImgAlpha,mImgScale,mImgRotate,mImgTranslate;
 AnimationDrawable anim;
 
     @Override
@@ -24,14 +28,35 @@ AnimationDrawable anim;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader);
         System.out.println();
-        mImgScale=(ImageView) findViewById(R.id.iv_scale);
         mImgAlpha=(ImageView) findViewById(R.id.iv_alpha);
-        mImgRotate=(ImageView) findViewById(R.id.iv_rotate);
-        mImgTranslate=(ImageView) findViewById(R.id.iv_translate);
-           mImgScale.setImageResource(R.drawable.zhen);
-        anim=(AnimationDrawable) mImgScale.getDrawable();
-        anim.start();
-        anim.stop();
+        Animation mScale=AnimationUtils.loadAnimation(this,R.anim.any1);
+
+        mImgAlpha.startAnimation(mScale);
+//
+//        mImgAlpha.setAnimation(mScale);
+//        AlphaAnimation mApAnm=new AlphaAnimation(0.1f,1f);
+//        mImgAlpha.startAnimation(mApAnm);
+
+
+
+//        mImgScale=(ImageView) findViewById(R.id.iv_scale);
+//        mImgAlpha=(ImageView) findViewById(R.id.iv_alpha);
+//        mImgRotate=(ImageView) findViewById(R.id.iv_rotate);
+//        mImgTranslate=(ImageView) findViewById(R.id.iv_translate);
+//        Animator animator=AnimatorInflater.loadAnimator(this,R.animator.test);
+//        animator.setTarget(mImgAlpha);
+//        animator.start();
+//        Animator mAm= AnimatorInflater.loadAnimator(this,R.animator.animany);
+//
+//        mAm.setTarget(mImgTranslate);
+//        mAm.start();
+
+
+
+//           mImgScale.setImageResource(R.drawable.zhen);
+//        anim=(AnimationDrawable) mImgScale.getDrawable();
+//        anim.start();
+
 
 
 //        Animation animScale= AnimationUtils.loadAnimation(LeaderActivity.this,R.anim.any);
@@ -71,4 +96,22 @@ AnimationDrawable anim;
 //        mImgTranslate.startAnimation(translateAnimation);
 
     }
+
+//
+//    public void playxml(View v){
+//
+//        ObjectAnimator oa = ObjectAnimator.ofFloat(mImgRotate, "translationX", 10, 50,20,100);
+//        oa.setDuration(2000);
+//        oa.start(); //开始动画
+//    }
+//    public void scale(View v) {
+//        ObjectAnimator oa = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.test);
+//        oa.setTarget(mImgAlpha);
+//        oa.start();
+//    }
+//    public void scale(View v){
+//        ObjectAnimator mOjAnt=ObjectAnimator.ofFloat(mImgScale,"alpha",0,1);
+//        mOjAnt.setDuration(3000);
+//        mOjAnt.start();
+//    }
 }
