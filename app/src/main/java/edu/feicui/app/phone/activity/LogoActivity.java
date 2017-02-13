@@ -1,8 +1,11 @@
 package edu.feicui.app.phone.activity;
 
 import android.graphics.drawable.AnimationDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
@@ -23,7 +26,10 @@ public class LogoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
+
         sr.read(this);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.hide();
 
         mImgLogo=(ImageView) findViewById(R.id.iv_logo);
         mImgLogo.setImageResource(R.drawable.logo);

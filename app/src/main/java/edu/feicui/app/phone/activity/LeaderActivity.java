@@ -1,37 +1,214 @@
 package edu.feicui.app.phone.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.graphics.drawable.AnimationDrawable;
-import android.support.v7.app.AppCompatActivity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.TranslateAnimation;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import edu.feicui.app.phone.R;
+import edu.feicui.app.phone.entity.SaveInstance;
+import edu.feicui.app.phone.service.SingBindService;
 
 public class LeaderActivity extends AppCompatActivity {
-    ImageView mImgAlpha,mImgScale,mImgRotate,mImgTranslate;
-AnimationDrawable anim;
+//    ImageView mImgAlpha,mImgScale,mImgRotate,mImgTranslate;
+//AnimationDrawable anim;
+    ViewPager mVpLeader;
+    TextView mTxtJump;
+    ImageView mImgDot1,mImgDot2,mImgDot3;
+    Context mCtx;
+    SingBindService singBindService;
+    ServiceConnection conn1=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            singBindService=((SingBindService.Mbind) service).getService();
+            singBindService.play();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leader);
-        System.out.println();
-        mImgAlpha=(ImageView) findViewById(R.id.iv_alpha);
-        Animation mScale=AnimationUtils.loadAnimation(this,R.anim.any1);
+        mVpLeader=(ViewPager)findViewById(R.id.vp_leader);
+        mTxtJump=(TextView)findViewById(R.id.txt_jump);
+        mImgDot1=(ImageView)findViewById(R.id.img_dot1);
+        mImgDot2=(ImageView)findViewById(R.id.img_dot2);
+        mImgDot3=(ImageView)findViewById(R.id.img_dot3);
+        mCtx=this;
+        Intent service=new Intent();
+        service.setClass(LeaderActivity.this,SingBindService.class);
+        bindService(service,conn1,BIND_AUTO_CREATE);
+        startService(service);
 
-        mImgAlpha.startAnimation(mScale);
+        if(!SaveInstance.getSaveInstance(this).getStringvalue("leader").equals("1")){
+            Intent intent=new Intent(LeaderActivity.this,LogoActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+
+        mTxtJump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SaveInstance.getSaveInstance(mCtx).putStringvalue("leader","2");
+                Intent intent=new Intent(LeaderActivity.this,LogoActivity.class);
+                unbindService(conn1);
+                startActivity(intent);
+
+            }
+        });
+        mTxtJump.setVisibility(View.INVISIBLE);
+        ArrayList<View> views=initView();
+        ViewPagerAdapter adapter=new ViewPagerAdapter(this);
+        adapter.setViews(views);
+        mVpLeader.setAdapter(adapter);
+        mVpLeader.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.i("#############", "onPageSelected1" + position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i("#############", "onPageSelected2" + position);
+                switch (position){
+                    case 0:
+                        mTxtJump.setVisibility(View.INVISIBLE);
+                        mImgDot3.setImageResource(R.mipmap.adware_style_selected);
+                        mImgDot2.setImageResource(R.mipmap.adware_style_default);
+                        mImgDot1.setImageResource(R.mipmap.adware_style_default);
+                        break;
+                    case 1:
+                        mTxtJump.setVisibility(View.INVISIBLE);
+                        mImgDot3.setImageResource(R.mipmap.adware_style_default);
+                        mImgDot2.setImageResource(R.mipmap.adware_style_selected);
+                        mImgDot1.setImageResource(R.mipmap.adware_style_default);
+                        break;
+                    case 2:
+                        mTxtJump.setVisibility(View.VISIBLE);
+                        mImgDot3.setImageResource(R.mipmap.adware_style_default);
+                        mImgDot2.setImageResource(R.mipmap.adware_style_default);
+                        mImgDot1.setImageResource(R.mipmap.adware_style_selected);
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+ArrayList<View> initView(){
+    ArrayList<View> views=new ArrayList<View>();
+View view=getLayoutInflater().inflate(R.layout.leader_cell1,null);
+    views.add(view);
+    view=getLayoutInflater().inflate(R.layout.leader_cell2,null);
+    views.add(view);
+    view=getLayoutInflater().inflate(R.layout.leader_cell3,null);
+    views.add(view);
+    return views;
+}
+    class ViewPagerAdapter extends PagerAdapter{
+        Context ctx;
+        ArrayList<View> views=new ArrayList<View>();
+        ViewPagerAdapter(Context context){
+            ctx=context;
+        }
+        public void setViews(ArrayList<View> views){
+            this.views=views;
+        }
+
+        @Override
+        public int getCount() {
+            return views.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view==object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View view=views.get(position);
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(views.get(position));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        System.out.println();
+//        mImgAlpha=(ImageView) findViewById(R.id.iv_alpha);
+//        Animation mScale=AnimationUtils.loadAnimation(this,R.anim.any1);
+//
+//        mImgAlpha.startAnimation(mScale);
 //
 //        mImgAlpha.setAnimation(mScale);
 //        AlphaAnimation mApAnm=new AlphaAnimation(0.1f,1f);
@@ -95,7 +272,7 @@ AnimationDrawable anim;
 //        translateAnimation.setRepeatCount(Animation.INFINITE);
 //        mImgTranslate.startAnimation(translateAnimation);
 
-    }
+
 
 //
 //    public void playxml(View v){

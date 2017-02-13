@@ -9,56 +9,7 @@
 
 
     tools:context="edu.feicui.app.phone.activity.HomeActivity">
-    <LinearLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_weight="1.1"
 
-        android:orientation="horizontal"
-        >
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/iv_home"
-            android:src="@mipmap/ic_launcher1"
-
-
-            android:layout_weight="1"
-            android:gravity="fill"
-            />
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#66CCFF"
-            android:layout_gravity="center_horizontal"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/iv_home1"
-            android:text="安卓管家"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:layout_weight="0.3"
-            />
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#66CCFF"
-            android:layout_gravity="center_horizontal"
-            />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/iv_home2"
-            android:src="@mipmap/ic_child_configs"
-            android:layout_weight="1"
-            />
-
-        </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -72,6 +23,47 @@
         android:layout_weight="0.6"
         android:orientation="horizontal"
         >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <edu.feicui.app.phone.view.DrawCycleView
+                android:id="@+id/dcv_cycle"
+                android:layout_height="140dp"
+                android:layout_width="140dp"
+                android:layout_gravity="center"
+
+
+
+
+
+
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true">
+
+
+
+            </edu.feicui.app.phone.view.DrawCycleView>
+
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                app:srcCompat="@mipmap/home_score_normal_bg"
+                android:id="@+id/imv_cycle" />
+
+            <TextView
+                android:text="点击加速"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:id="@+id/txt_proportion" />
+        </FrameLayout>
+
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -107,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@mipmap/icon_softmgr"
-            android:id="@+id/imageView2"
+            android:id="@+id/img_jump_to_softmanage"
             android:layout_gravity="center"
             android:layout_weight="1" />
         <View

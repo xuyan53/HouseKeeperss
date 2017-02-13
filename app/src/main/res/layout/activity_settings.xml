@@ -50,21 +50,21 @@
 
         <TextView
             android:text="开机启动"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:id="@+id/textView16"
             android:textSize="15dp"
             android:textColor="@color/b1"
-            android:layout_weight="1" />
+             />
 
         <Switch
             android:text=""
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/switch1"
-            android:layout_weight="0.2" />
+             />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -79,21 +79,21 @@
         >
         <TextView
             android:text="通知图标"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:id="@+id/textView17"
             android:textSize="15dp"
             android:textColor="@color/b1"
-            android:layout_weight="1" />
+            />
 
         <Switch
             android:text=""
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/switch2"
-            android:layout_weight="0.2" />
+           />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -108,21 +108,21 @@
         >
         <TextView
             android:text="消息推送"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
             android:id="@+id/textView18"
             android:textSize="15dp"
             android:textColor="@color/b1"
-            android:layout_weight="1" />
+             />
 
         <Switch
             android:text=""
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/switch3"
-            android:layout_weight="0.2" />
+           />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
